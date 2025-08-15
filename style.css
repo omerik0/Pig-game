@@ -33,7 +33,7 @@ main {
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.25);
   border-radius: 9px;
   overflow: hidden;
-  display: flex;
+  display: flex;               /* row on desktop */
 }
 
 .player {
@@ -66,16 +66,9 @@ main {
 .player--active {
   background-color: rgba(255, 255, 255, 0.4);
 }
-.player--active .name {
-  font-weight: 700;
-}
-.player--active .score {
-  font-weight: 400;
-}
-
-.player--active .current {
-  opacity: 1;
-}
+.player--active .name { font-weight: 700; }
+.player--active .score { font-weight: 400; }
+.player--active .current { opacity: 1; }
 
 .current {
   background-color: #c7365f;
@@ -94,12 +87,9 @@ main {
   font-size: 1.7rem;
   color: #ddd;
 }
+.current-score { font-size: 3.5rem; }
 
-.current-score {
-  font-size: 3.5rem;
-}
-
-/* ABSOLUTE POSITIONED ELEMENTS */
+/* ABSOLUTE POSITIONED ELEMENTS (desktop) */
 .btn {
   position: absolute;
   left: 50%;
@@ -114,7 +104,6 @@ main {
   font-weight: 400;
   transition: all 0.2s;
 
-  background-color: white;
   background-color: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
 
@@ -129,24 +118,15 @@ main {
   margin-right: 0.7rem;
 }
 
-.btn--new {
-  top: 4rem;
-}
-.btn--roll {
-  top: 39.3rem;
-}
-.btn--hold {
-  top: 46.1rem;
-}
+.btn--new { top: 4rem; }
+.btn--roll { top: 39.3rem; }
+.btn--hold { top: 46.1rem; }
 
 .btn:active {
   transform: translate(-50%, 3px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
 }
-
-.btn:focus {
-  outline: none;
-}
+.btn:focus { outline: none; }
 
 .dice {
   position: absolute;
@@ -157,15 +137,79 @@ main {
   box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.2);
 }
 
-.player--winner {
-  background-color: #2f2f2f;
+.player--winner { background-color: #2f2f2f; }
+.player--winner .name { font-weight: 700; color: #c7365f; }
+
+.hidden { display: none; }
+
+/* ------------------------------ */
+/*       RESPONSIVE: MOBILE       */
+/* ------------------------------ */
+@media (max-width: 768px) {
+  html { font-size: 56.25%; } /* 1rem ≈ 9px */
+
+  body {
+    height: auto;
+    min-height: 100vh;
+    padding: 1.6rem;
+  }
+
+  main {
+    width: 100%;
+    max-width: 48rem;
+    height: auto;
+    padding: 1.2rem;
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;      /* stack vertically */
+    gap: 1.2rem;
+  }
+
+  .player {
+    padding: 2rem;
+    width: 100%;
+  }
+
+  .name { font-size: clamp(2rem, 6vw, 3rem); }
+  .score { font-size: clamp(4rem, 12vw, 6rem); }
+  .current {
+    width: 100%;
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+  .current-score { font-size: clamp(2.2rem, 7vw, 3rem); }
+
+  /* Dice becomes inline block in the flow */
+  .dice {
+    position: static;
+    transform: none;
+    align-self: center;
+    height: clamp(7rem, 22vw, 9rem);
+    margin: 0.4rem 0 0.8rem;
+    box-shadow: 0 1rem 2.5rem rgba(0,0,0,0.15);
+    order: 2; /* appears between players and buttons */
+  }
+
+  /* Buttons become normal flow, full-width, stacked */
+  .btn {
+    position: static;
+    transform: none;
+    width: 100%;
+    margin: 0.4rem 0;
+    font-size: 1.6rem;
+    padding: 1rem 1.6rem;
+    border-radius: 12px;
+    order: 3;
+  }
+  .btn:active { transform: translateY(2px); }
+  .btn--new, .btn--roll, .btn--hold { top: auto; } /* neutralize desktop tops */
+
+  /* Slightly reduce blur/glow on mobile for performance */
+  main { backdrop-filter: blur(80px); }
 }
 
-.player--winner .name {
-  font-weight: 700;
-  color: #c7365f;
-}
-
-.hidden {
-  display: none;
+@media (max-width: 360px) {
+  html { font-size: 50%; } /* 1rem ≈ 8px */
+  .player { padding: 1.6rem; }
+  .btn { padding: 0.9rem 1.4rem; }
 }
